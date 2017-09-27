@@ -193,6 +193,18 @@ Accounts.prototype.sign = function sign(data, privateKey) {
     };
 };
 
+Accounts.prototype.signRaw = function signRaw(hash, privateKey) {
+    var signature = Account.sign(hash, privateKey);
+    var vrs = Account.decodeSignature(signature);
+    return {
+        messageHash: hash,
+        v: vrs[0],
+        r: vrs[1],
+        s: vrs[2],
+        signature: signature
+    };
+};
+
 Accounts.prototype.recover = function recover(hash, signature) {
 
     if (_.isObject(hash)) {
